@@ -1,0 +1,92 @@
+---
+title: "Mini Experiment"
+author: "Yuri Lavinas"
+date: "09/05/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache = TRUE)
+library("ggplot2")
+```
+
+# Experiment Summary
+
+I want to evaluate the methods available to go from the $1^{st}$ to the my laboratory room, on the 10$^{th}$ floor, and consider with one is the fastest. The methods considered in this experiment are to take the elevator or to use the stairs. 
+
+For this experiment the time, in seconds, was measured considering the moment the switch of the elevator is pressed until the laboratory room is reached. When using the stairs, the time is counted from the moment I started climbing them until the moment the laboratory room is reached. Resting time, if needed, was considered.
+
+At first, It may seems absurd to compare these two methods once for many the elevator is clearly the best option. That said, I have done a similar experiment in the past, and the results stated the by using them I spent the same time.  
+
+In that experiment, I wanted to compare going up from the $1^{st}$ to the my internship agency, on the 12$^{th}$ floor. In that building, 3 elevators were available to general use. My observations at that time made me conclude that taking the stairs was the fastest option, mainly because too many people used the elevator. In the extreme case, during lunch time, it stopped at every floor.
+
+Based of that background, I want to analyze if the same happens in the building where my laboratory is located. My expectations are that this trend will not be the same for this experiment, once the elevator is less used that the elevators from the first experiment. That means that I believe that using the elevators are going to be faster.
+
+# Experiment Design
+ 
+The experiment considered the usage of the two main elevators and the main stairs. If possible, I will try use the stairs as I would in normal conditions, avoiding to climb it faster and resting if needed.
+
+Also if the results are similar, as expected I would consider taking the stairs because it may be good for my health.
+
+It is important to state that my fitness condition will impact the results.  I will get tired after climbing the stairs and I can be tired before the experiments, i.e., in cases that I had a bad night of sleep or I in the case I rode the bicycle before climbing the stairs.
+
+Because of that the experiments will be limited to 8 repetitions, on two different days. That is, 4 repetitions per day.
+
+```{r echo = FALSE}
+set.seed(42)
+x <- list()
+for (i in 1:4) { 
+  x[[i]] <- sample(c("stairs", "elevator"), 2)  
+}
+```
+
+I chose the order to measure the methods randomly. The experiments were conducted in the following other: `r unlist(x)`.
+
+## Hypothesis
+
+The hypothesis considered in this experiment is that the methods spend the same time. That is, there is no difference on the measured times, in seconds.
+
+# Analysis
+
+```{r echo = FALSE}
+ 
+ stairs <- c(123, 136, 169, 182)
+ elevator <- c(165, 163, 131, 129)
+ 
+df_stairs <- data.frame(stairs)
+df_elevator <- data.frame(elevator)
+df_approaches <- cbind(df_stairs, df_elevator)
+```
+
+The results of the experiment are show following.
+
+1. Stairs: `r mean(stairs)` $\pm$ `r sd(stairs)`
+2. Elevator: `r mean(elevator)` $\pm$ `r sd(elevator)`
+
+The results of the Student T-test when the hypothesis is "they have same mean" are:
+
+
+```{r, echo = FALSE}
+t.test(stairs - elevator)
+```
+
+Confirming that there is no difference between the methods, in terms of time (in seconds). 
+
+Here follows a simple visualization of the results.
+
+```{r, fig.width=12, fig.height=6.5, echo = FALSE}
+boxplot(df_approaches, col = c("blue", "orange"), ylab = "time (s)")
+```
+
+The box-plot shows that the observations are further from the mean when compared whit the observations from the elevator, which are closer to the mean. 
+
+
+# Discussion
+
+The results from the analysis shows that using stairs and elevator are not different in terms of time. Of course, using the stairs makes me fell more tired, but has benefits in terms of health. Using the elevator is easier and a better choice if I have to move frequently from the laboratory to the first floor. 
+
+The number of repetitions were very few and that could impact the results. Even so, because I think the health benefits are important to be considered, I will generally use the stairs to come and go to the laboratory.
+
+
+

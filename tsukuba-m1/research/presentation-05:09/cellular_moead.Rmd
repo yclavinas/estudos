@@ -1,0 +1,248 @@
+---
+title: "MOEA/D"
+subtitle: "MOEA/D as Cellular GA"
+author: | 
+  | Yuri Lavinas
+  | Master Student - University of Tsukuba
+date: "05/09/2018"
+
+output: 
+  beamer_presentation:
+    slide_level: 3
+    theme: "Szeged"
+    fonttheme: "professionalfonts"
+    citation_package: natbib
+    latex_engine: "pdflatex"
+    includes:
+          in_header: header_pagenrs.tex
+          after_body: after_body.tex
+bibliography: bib.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+library(png)
+library(grid)
+library(ggplot2)
+library(gridExtra)
+```
+
+# MOP
+## Multi-objective Problems
+### What is MOP?
+Multiobjective Optimization Problem have $m$ multiple objective functions that must be optimized simultaneously.
+
+Minimize$^1$ $F(x) = (f_1(x), f_2(x), ..., f_m(x))$,
+
+subject to $x$ in $\Omega$.
+
+- $F(x)$ objective functions;
+- $f_i$ is the i-th objective to be minimized;
+- $x$ is the decision vector;
+- $\Omega$ is the decision space.
+ 
+ \footnotesize $^1$ All definitions are for minimization. Following inequalities should be reversed if the goal is to maximize.
+
+### Why is MOP interesting?
+
+1. Many real-world scientific and engineering are MOP.
+    - Water quality control, Groundwater pollution remediation, Design of marine vehicles, ... @coello2007evolutionary.
+    - Petrol extraction.
+2. Hard problems: to balance the interests of the multi-objective as a whole is hard. 
+
+
+## Pareto Set
+### What is Pareto Set?
+
+Objectives may be conflicting
+    - The goal is to find good trade-offs.
+
+- Set of solutions.
+
+Set of *optimum solutions* - Pareto set.
+
+- Non-dominated solutions: no single solution provides a better trade-off in all objectives.
+
+### What is Pareto Set?
+
+\centering
+```{r fig.width=4.5, fig.height=10,echo=FALSE}
+img <- readPNG("pareto_front_diff_scalarizins_f.png")
+ grid.raster(img)
+```
+
+\tiny From @ishibuchi2009adaptation.
+
+
+## Pareto Set
+### Non-dominated solutions
+
+1. Let $u = (u_1, ..., u_m)$ and $v = (v_1, ..., v_m)$ vectors in $\Omega$ (the decision space).
+    - $\forall i:u$ dominates $v$ if $f_i(u) \leq f_i(v)$ and $\exists j:f_j(u) < f_j(v)$.
+    - u dominates v, v is dominated by u, u is better that v.
+
+2. A point $x^*$ in $\Omega$  is called *Pareto Optimal* if no other point dominates $x^*$. 
+    <!-- - $\nexists F(y^*)$ that dominates $F(x^*)$ -->
+
+## Pareto Set
+### Pareto Front
+
+1. The set of all Pareto Optimal is called the *Pareto Set*. 
+    - $P^*$ = {$x \in \Omega:\nexists y \in \Omega$ and $F(y) \leq F(x)$}
+3. **Pareto Front** is the image of the Pareto Set in the objective space.
+    - PF = {$F(x) = (f_i(x), ..., f_m(x)): x \in P^*$}
+
+### Pareto Front
+\centering
+```{r fig.width=5, fig.height=15,echo=FALSE}
+img <- readPNG("pareto_dominated.png")
+ grid.raster(img)
+```
+\tiny From: http://www.cenaero.be/Page.asp?docid=27103&langue=EN
+
+# MOEA/D
+## MOEA/D
+### Decompostion
+
+MOEA/D represents a class of population-based meta-heuristics for solving MultiObjective Problems (MOPs).
+
+- It is based on decomposition - one kind of scalarizing function
+  - One multi-objective problem becomes various single-objective sub-problems.
+  - All sub-problems are solved in parallel. 
+  - A decomposition strategy generates weight vectors that defines the sub-problems.
+
+## MOEA/D
+### Why use decomposition?
+
+- It may be good at generating an even distribution of solutions in MOPs;
+- It reduces the computation complexity when compared to other algorithms (NSGA-II) (at each generation), @zhang2009performance;
+<!-- - An optimal solution of a set of scalar optimization problems can be a Pareto optimal solution, under mild conditions; -->
+<!-- - All solutions can be compared based on their objective function values; -->
+<!-- - It is simple to find a solution to multi single-objective problems than for a multi-objective problem; -->
+- Fitness assignment and diversity maintenance become easier to handle.
+
+
+## MOEA/D
+### Components of the MOEA/D
+
+- Decomposition strategy: decomposes w/ weight vectors;
+- Aggregation function:  weight vector => single-objective sub-problems;
+- **Neighborhood assignment strategy**: Relationship between sub-problems;
+- Variation Stack: New candidates solutions;
+- Update Strategy: Maintain/discard candidate solutions;
+- Constraint handling method: Constraint violation;
+- Termination Criteria: when to stop the search.
+
+### Simple Visualization 
+
+\centering
+```{r fig.width=3.4, fig.height=10,echo=FALSE}
+img <- readPNG("MOEAD.png")
+ grid.raster(img)
+```
+
+
+# MOEA/D and Cellular GA
+
+## Cellular GA
+### What is Cellular GA?
+
+
+- Cellular GA (cGA) is a distribuited model of the Genetic Algorithm (GA).
+     - From  @gong2015distributed: A cGA has one population but arranges the individuals on the grid, called **cell**.
+
+- Cellular GA is well explored in the context of single-objective problems (SOP).
+    - Each individual is only compared with its neighborhood.
+    - Each individual uses only its neighborhood for updates.
+    - It is highly parallelized: Synchronous x Asynchronous.
+
+### Cell and neighbors
+\raggedleft
+```{r fig.width=3, fig.height=8.5,echo=FALSE}
+myimages <- list.files("images/", pattern = ".png", full.names = TRUE)
+knitr::include_graphics(myimages)
+```
+
+\raggedleft \tiny From: @robles2009evolutionary
+
+
+### Research focus
+
+- Goal: To propose improvements to the MOEA/D by incorporating (well-)established techniques from the Cellular GA.
+
+- Why?  MOEA/D can be viewed as a cGA.
+    - A cell can be seen as a specific "Neighborhood assignment strategy", where each cell has its own weight vector.
+
+### Research focus
+
+\centering
+```{r fig.width=4, fig.height=10,echo=FALSE}
+img <- readPNG("all.png")
+ grid.raster(img)
+```
+
+
+
+## Cellular GA and MOEA/D @ishibuchi2009adaptation
+### MOEA/D as Cellular GA
+
+1. Fitness of a solution is calculated at each cell using a scalarizing fitness function with the weight vector associated with that cell.
+    - The cells are located in the (m-1)-dimensional subspace -> satisfying the normalization condition:
+         - $w_1 + ... + w_m = 1$ and $w_i \geq 0$ for i = 1, 2 ,...,m.
+    - Two neighborhood structures: 
+         - Local selection.
+         - Local replacement, both defined using the Euclidean distance between cells.
+
+### MOEA/D as Cellular GA
+2. Parent solutions are randomly selected from the **selection neighbors**.
+    2. Offspring is generated from the parents by crossover, mutation and/or repair.
+3. Generated offspring is compared with the **replacement neighbors**, considering the weight vector.
+
+Obs: The local selection and local replacement are performed for the next cell after they are completed for the current cell. 
+
+### Discussion
+
+- The main characteristic feature of MOEA/D as a cGA is the use of **local replacement** in addition to local selection. 
+    - Generated offspring for a cell is compared with not only the current solution of the cell but also its neighbors for possible replacement.
+    
+- Local replacement neighborhood has greater effect on the performance than local selection neighborhood.
+    - Increasing its size tends to be better.
+
+### Discussion
+
+- Good results with very large populations.
+
+- Multiple neighbors can be replaced by one good offspring - less diversity.
+    - Decreasing the size of competition neighborhood increases the non-dominated solutions, but degrades the search ability of the MOEA/D.
+    
+
+# Interesting Recent Developments
+## MOEA/D
+### MOEA/D
+
+1. Dual populations (external population).
+    - Store the visited non-dominated solutions with a weight vector, and then add/remove sub-problems given crowded/sparse regions by adjusting the weight vector, @qi2014moea.
+    - Stored the non-dominated solutions such that the Hyper Volume is maximized, @jiang2016towards.
+    - External population is updated using non-dominates sorting and crowding distance <- NSGA-II. Also it is used to guide the allocation of computational resources to a sub-problem given its contribution, @cai2015external.
+
+3. Multigrid scalarizing scheme or a single grid with different scalarizing functions are alternately assigned for each weight vector @ishibuchi2010simultaneous. 
+
+## MOEA/D as Cellular GA
+### MOEA/D as Cellular GA
+
+1. Asynchronous - could degenerate the algorithm.
+    - Dynamic computation resource allocation to different sub-problems, @zhang2009performance and, @zhou2016all.	
+    
+2. Island model with different parameter values and/or reproduction operators and/or scalarizing scheme - aiming to balance convergence and diversity, and to explore the objective space better.
+    - Neighborhood relationship should be defined in the objective space and should be adaptive, @giagkiozis2014generalized.
+    - (self-)Adaptive replacement strategies, @wang2016adaptive and @zhang2016self.
+
+
+# References
+## References
+### Basic References
+Most of this presentation was based on the works of @trivedi2017survey and  @zhang2007moea.
+
+\small

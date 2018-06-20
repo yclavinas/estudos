@@ -1,0 +1,117 @@
+---
+title           : "Experiment Design -- Case Study 02"
+output          : pdf_document
+---
+
+## Introduction
+
+In this notebook, you are tasked to perform a comparative experiment on a live optimization algorithm
+(Differential Evolution), using the ExpDE R package.
+
+## Outline
+
+Algorithms based on populations are a common alternative for solving engineering optimization problems. 
+Such algorithms are usually composed of an interactive cycle, in which a set of candidate solutions 
+to the optimization problems are repeteadly modified and selected, so that the solution space of the 
+problem is sampled and an optimal solution (maximum or minimum) is found for the given objective function.
+
+Among the population algorithms, a popular one is known as _differential evolution_ (DE). Put simply, 
+this method is composed by the following steps:
+
+
+0. Input: $N,\ n_{iter},\ recpars,\ mutpars$ 
+1. $t \leftarrow 0$
+2. $X_t \leftarrow \{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_N\}$ (initial population)
+3. $\vec{f}_t \leftarrow f(X_t)$ 
+4. While ($t < n_{iter}$)
+    1. $V_t \leftarrow$ mutation($X_t,\ mutpars$)
+    2. $U_t \leftarrow$ recombination($X_t,\ V_t,\ recpars$)
+    3. $\vec{j}_t \leftarrow f(U_t)$ 
+    4. $(X_{t+1},\ \vec{f}_{t+1}) \leftarrow$ selection($X_t,\ U_t,\ \vec{f}_t,\ \vec{j}_t$)
+    5. $t \leftarrow t + 1$
+5. Output: $(X_t,\ \vec{f}_t)$
+    
+Suppose that a researcher is interested in investigating the effect of different _recombination_ operators (step **4.2**) on the 
+performance of the algorithm for a certain class of problems. To this end, the researcher implements the algorithm and each operator 
+in a standard fashion, using the [ExpDE](https://cran.r-project.org/web/packages/ExpDE/) package. A copy of this package is included 
+as a zip file with the other notebooks, and the development function is available on [available no Github](https://github.com/fcampelo/ExpDE/tree/devel).
+
+## Tasks
+
+As a preliminar analysis of this problem, you will be assigned a small number of recombination operators, and a single test problem. 
+The goal of this study is to answer the following questions:
+
+\begin{center}\textit{Is there a difference in the mean performance of the algorithm when using these different recombination operators, for the given test problem? In case there is, which is the best operator in terms of average performance (the \textit{lower} the value returned, the better), and what is the magnitude of the differences found? Is there an operator that should be recommended in comparison to the others?}\end{center} 
+
+The following experimental parameters are given for this study:
+
+- Minimal difference of practical significance between any pair of algorithm (padronized as Cohen's _d_ coefficient): ($d^* = \delta^*/\sigma$) = 0.25
+- Desired significance: $\alpha = 0.05$
+- Minimum power desired (for the case $d = d^*$): $\pi = 1 - \beta = 0.85$
+
+## Informações operacionais
+
+To install and load the package in your computer, you can sue the following command:
+
+```{r block1, eval=FALSE}
+install.packages("ExpDE_0.1.4.tar.gz", repos = NULL, type = "source") # from the downloaded file
+install.packages("ExpDE")                                             # from the internet
+library(ExpDE)                                                        # loads the package
+```
+
+The fixed parameters for the algorithm (along the entire experiment) are given by:
+
+```{r block2, eval=FALSE}
+selpars  <- list(name  = "selection_standard")
+stopcrit <- list(names = "stop_maxeval", maxevals = 60000, maxiter = 1000)
+probpars <- list(name  = "sphere", xmin  = -seq(1,20), xmax  = 20 + 5 * seq(5, 24))
+```
+
+The recombination operators that should be compared are given by:
+
+``` {r block3a, eval = FALSE}
+## Arithmetic recombination
+recpars1 <- list(name = "recombination_arith") 
+mutpars1 <- list(name = "mutation_rand", f = 4)
+popsize1 <- 300
+
+## Binomial recombination
+recpars2 <- list(name = "recombination_bin", cr = 0.7) 
+mutpars2 <- list(name = "mutation_best", f = 3)
+popsize2 <- 300
+
+## BLX-alpha recombination
+recpars3 <- list(name = "recombination_blxAlphaBeta", alpha = 0.4, beta = 0.4) 
+mutpars3 <- list(name = "mutation_rand", f = 4)
+popsize3 <- 230
+
+## Eigenvector-based binomial recombination
+recpars4 <- list(name = "recombination_eigen", othername = "recombination_bin", cr = 0.9) 
+mutpars4 <- list(name = "mutation_best", f = 2.8)
+popsize4 <- 85
+```
+
+Each individual observation of the performance of the algorithm, with a given operator, can be obtained using the 
+following commands:
+
+``` {r block4, eval = FALSE}
+out <- ExpDE(popsizeX, mutparsX, recparsX, selpars, stopcrit, probpars)
+out$Fbest
+```
+
+\noindent where _popsizeX_, _mutparsX_ a _recparsX_ must be replaced by the appropriate variables.
+
+
+## Other considerations
+
+This case study consists of the following steps:
+
+1. Formulating the test hypothesis;
+1. Calculating the Sample Size;
+1. Obtaining and Inputting the data;
+1. Testing the hypothesis;
+1. Estimating the effect size and the confidence intervals;
+1. Verifying the assumptions of the tests;
+1. Drawing the conclusions;
+1. Discussions of possible limitations of the experiment, and suggestion for improvement.
+

@@ -1,0 +1,74 @@
+\begin{thebibliography}{10}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Chugh(2017)]{chugh2017handling}
+Tinkle Chugh.
+\newblock Handling expensive multiobjective optimization problems with
+  evolutionary algorithms.
+\newblock \emph{Jyv{\"a}skyl{\"a} studies in computing 263.}, 2017.
+
+\bibitem[Coello et~al.(2007)Coello, Lamont, Van~Veldhuizen,
+  et~al.]{coello2007evolutionary}
+Carlos A~Coello Coello, Gary~B Lamont, David~A Van~Veldhuizen, et~al.
+\newblock \emph{Evolutionary algorithms for solving multi-objective problems},
+  volume~5.
+\newblock Springer, 2007.
+
+\bibitem[Fischetti and Monaci(2014)]{fischetti2014exploiting}
+Matteo Fischetti and Michele Monaci.
+\newblock Exploiting erraticism in search.
+\newblock \emph{Operations Research}, 62\penalty0 (1):\penalty0 114--122, 2014.
+
+\bibitem[Gomes et~al.(2000)Gomes, Selman, Crato, and Kautz]{gomes2000heavy}
+Carla~P Gomes, Bart Selman, Nuno Crato, and Henry Kautz.
+\newblock Heavy-tailed phenomena in satisfiability and constraint satisfaction
+  problems.
+\newblock \emph{Journal of automated reasoning}, 24\penalty0 (1-2):\penalty0
+  67--100, 2000.
+
+\bibitem[Ishibuchi et~al.(2009)Ishibuchi, Sakane, Tsukamoto, and
+  Nojima]{ishibuchi2009adaptation}
+Hisao Ishibuchi, Yuji Sakane, Noritaka Tsukamoto, and Yusuke Nojima.
+\newblock Adaptation of scalarizing functions in moea/d: An adaptive
+  scalarizing function-based multiobjective evolutionary algorithm.
+\newblock In \emph{International Conference on Evolutionary Multi-Criterion
+  Optimization}, pages 438--452. Springer, 2009.
+
+\bibitem[Lissovoi et~al.(2017)Lissovoi, Sudholt, Wagner, and
+  Zarges]{lissovoi2017theoretical}
+Andrei Lissovoi, Dirk Sudholt, Markus Wagner, and Christine Zarges.
+\newblock Theoretical results on bet-and-run as an initialisation strategy.
+\newblock In \emph{Proceedings of the Genetic and Evolutionary Computation
+  Conference}, pages 857--864. ACM, 2017.
+
+\bibitem[McKay et~al.(1979)McKay, Beckman, and Conover]{mckay1979comparison}
+Michael~D McKay, Richard~J Beckman, and William~J Conover.
+\newblock Comparison of three methods for selecting values of input variables
+  in the analysis of output from a computer code.
+\newblock \emph{Technometrics}, 21\penalty0 (2):\penalty0 239--245, 1979.
+
+\bibitem[Stein(1987)]{stein1987large}
+Michael Stein.
+\newblock Large sample properties of simulations using latin hypercube
+  sampling.
+\newblock \emph{Technometrics}, 29\penalty0 (2):\penalty0 143--151, 1987.
+
+\bibitem[Zhang et~al.(2009)Zhang, Liu, and Li]{zhang2009performance}
+Qingfu Zhang, Wudong Liu, and Hui Li.
+\newblock The performance of a new version of moea/d on cec09 unconstrained mop
+  test instances.
+\newblock In \emph{Evolutionary Computation, 2009. CEC'09. IEEE Congress on},
+  pages 203--208. IEEE, 2009.
+
+\bibitem[Zhou and Zhang(2016)]{zhou2016all}
+Aimin Zhou and Qingfu Zhang.
+\newblock Are all the subproblems equally important? resource allocation in
+  decomposition-based multiobjective evolutionary algorithms.
+\newblock \emph{IEEE Transactions on Evolutionary Computation}, 20\penalty0
+  (1):\penalty0 52--64, 2016.
+
+\end{thebibliography}

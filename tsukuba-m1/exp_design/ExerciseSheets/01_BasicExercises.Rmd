@@ -1,0 +1,255 @@
+---
+title: "Experiment Design -- Review Notebook"
+output: html_notebook
+---
+
+## Introduction
+
+This notebook reviews basic concepts in R Programming, Statistics, and Data Analysis 
+for the course 01CH740, "Experiment Design in Computer Sciences".
+
+**The notebook will not be graded**. Please try to answer all questions in the sections
+below in order to confirm your understanding of the material and reinforce the 
+concepts studied. 
+
+If you don't understand how to solve a particular problem, try the following resources:
+- The Two R notebooks included in this ZIP file ("R for beginners" and "R reference card")
+- The online help of R-studio
+- Raise your hand and ask a question!
+
+## Part 1: Science and Experimentation
+
+For the following questions, add your answers under each question as a paragraph.
+
+**Q1:** Who is one scientist that you admire? What was one scientific contribution from this person?
+
+Turing. He made many contributions, and the one that I admire the most is the "Turing machine".
+
+**Q2:** What is the difference between a **Research Question** and an **Experiment**?
+
+The research question is a question that is not yet answered and that you want to explore using experiments that can help you understanding the question.
+
+**Q3:** When describing an experiment, we use the terms "Factors" and "Variable of Interest". What are the meanings of these two terms?
+
+Factors are variable that may influence the results and the experiments you are doing. The variable of interest, can be one factor,  is a variable that is related to the research question and that the experiments are going to focus and which you want to understand better.
+
+**Q4:** Why are multiple repetitions necessary in many experiments?
+
+Some experiments may have varying results depending of a execution. Factors and randomness are exemples that influence on that variablilty. If the repetitions are made, then the experiment results may be analysed even with this variability.
+
+
+**Q5:** What does "randomization" means in the context of experiment design?
+
+It means to use different values for factors that you are not interested in exploring, but that affects the results. Then, a random value is set at each repetition to the factors. 
+
+**Q6:** Describe one experiment that you might do in your research. 
+
+I want to compare the proposed approach with a control method. To select this control method is a good question.
+
+For the experiment, a number of repetitions need to be decided.
+
+Same factors are number of evaluations, hyper-parameters, configurations of the framework, 
+
+For each repetition, a metric (HV) should be used to compare the results of the proposed approach and the ones of the control method ant then I can compare then.
+
+## Part 2: Basic Statistics
+
+The following exercises require you to write R code. Write the code inside the 
+code blocks. You may wish to create more code blocks to organize your answer better.
+
+**Q1** The "BJsales" variable, which is present in base R, contains a list of daily sales
+total for a shop. Analyse this data set using basic statistics, and answer the following 
+questions:
+
+- What are the mean and standard deviation of the BJsales dataset? 
+- What are the minimum and maximum values?
+- Plot the values in this dataset using a histogram and a QQ plot. 
+- Does this data set follow a normal distribution?
+- Calculate the 90% Confidence interval of this data set.
+- What other observations can you make from this data set?
+
+Get info from the data
+```{r}
+summarize.ts <- summary(BJsales)
+str(BJsales)
+```
+
+Mean: `r summarize.ts[[1]]`
+Standard Deviation: `r sd(BJsales)`
+min: 198.6, max: `r summarize.ts[[length(summarize.ts)]]`
+conf. interval: 
+
+Plot information:
+```{r, echo=TRUE}
+qqnorm(BJsales)
+qqline(BJsales, col = 2)
+library(boot)
+
+my.mean <- function (x, index){
+  return(mean(x[index]))
+}
+boot.data <-boot(BJsales, my.mean, 1000)
+aux <- boot.ci(boot.data, conf = 0.9)
+aux$normal
+```
+
+
+It shows that the data is not normal, to verify that we do the the Shapiro Wilk test.
+
+The number of sales got bigger over time, it does not follow the normal distribution, so it is important to analyse it given that.
+
+```{r}
+shapiro.test(BJsales)
+```
+
+Since the p.value `r shapiro.test(BJsales)$p.value` we can not assume that it follows the normal distribution.
+
+**Q2** The dataset "lh" gives the amount of the luteinizing hormone of a person, measured every 10 minutes.
+Answer the following questions:
+
+- What are the minimum, maximum, average values of this set? what is the standard deviation?
+- Does this data set follow a normal distribution?
+- What are the confidence intervals for the values on this data set?
+
+```{r}
+summarised.info <- summary(lh)
+```
+
+min: `r summarised.info[[1]]`
+max: `r summarised.info[[length(summarised.info)]]`
+max: `r summarised.info[[4]]`
+sd: `r sd(lh)`
+Conf. Interval: `r t.test(lh, conf.level = 0.9)$conf.int`
+
+Plot information:
+```{r, echo=TRUE}
+qqnorm(lh);qqline(lh, col = 2)
+```
+
+It shows that the data is  normal, to verify that we do the the Shapiro Wilk test.
+
+The number of sales got bigger over time, it does not follow the normal distribution, so it is important to analyse it given that.
+
+```{r}
+shapiro.test(lh)
+```
+
+Since the p.value `r shapiro.test(BJsales)$p.value` we can  assume that it follows the normal distribution.
+
+
+**Q3** The dataset "ChickWeight" contains the weight of chickens on four different diets, measured 
+every 2 days from birth until 21 days of age. Analyse this data set using basic statistics, and 
+answer the following questions:
+
+- What is the average final weight (on the 21st day) for the chicks on each diet? Which diet 
+causes the chicks to have the highest weight? The lowest weight?
+- Calculate the 90%-confidence interval for the diets on the last day. Does this information changes 
+your answer to the previous question?
+- Repeat the two calculations above for the weight of the chicks after two days of life (Time = 2). 
+What differences do you observe?
+```{r}
+average <-tapply(ChickWeight$weight, ChickWeight$Time, mean) 
+last.day <- ChickWeight[ChickWeight$Time==21, ]
+qqnorm(last.day$weight)
+shapiro.test(last.day$weight)
+boxplot(last.day$weight ~ last.day$Diet)
+summary(aov(last.day$weight~last.day$Diet))
+plot(TukeyHSD(aov(last.day$weight~last.day$Diet)))
+```
+
+Avarage on the final day: `r avarage[length(avarage)]`
+
+
+```{r}
+average <-tapply(ChickWeight$weight, ChickWeight$Time, mean) 
+last.day <- ChickWeight[ChickWeight$Time==2, ]
+qqnorm(last.day$weight)
+shapiro.test(last.day$weight)
+boxplot(last.day$weight ~ last.day$Diet)
+summary(aov(last.day$weight~last.day$Diet))
+plot(TukeyHSD(aov(last.day$weight~last.day$Diet)))
+```
+
+**Q4** Let's evaluate the Central Limit Theorem under theoretical Distributions:
+
+- The function *rexp* creates numbers following the exponential distribution with parameter lambda.
+- Create a list "l1" containing 1000 observations from the exponential distribution, with lambda = 0.2
+- Create a list "l2" containing 50 observations, which are the means of random groups of 20 observations from l1
+- Compare the mean and the standard deviation of l1 and l2
+- Test whether l1 and l2 follow a normal distribution
+
+- Repeat the exercise above using a different theoretical distribution (see "R for Beginners", page 13)
+
+```{r}
+l1 <- rexp(n = 1000, rate = 0.2)
+l2 <- sapply(1:50, FUN = function(x){ return(mean(sample(l1, 20)))})
+mean(l1)
+mean(l2)
+
+sd(l1)
+sd(l2)
+
+
+qqnorm(l1)
+qqnorm(l2)
+```
+
+```{r}
+l1 <- rchisq(1000, df=100, ncp = 0)
+l2 <- sapply(1:50, FUN = function(x){ return(mean(sample(l1, 20)))})
+mean(l1)
+mean(l2)
+
+sd(l1)
+sd(l2)
+
+
+qqnorm(l1)
+qqnorm(l2)
+```
+
+## Part 3: Statistical Inference
+
+**Q1** The dataset "nhtemp" shows the mean annual temperature in New Haven, from 1912 to 1971. We 
+want to answer the following question: Is the mean annual temperature in NH rising?
+
+- First try to answer the question by plotting the dataset. What do you observe?
+```{r}
+
+```
+
+- There are many ways to formalize this question as a hypothesis. Suggest at least two different hypothesis tests that could be made with this data.
+
+- Let's perform the following inferential analysis: Is the mean difference between the temperature of consecutive years above zero?
+- First calculate from the dataset, the list of differences in consecutive years.
+- Next, we will try a one-sample test of this mean against the value 0:
+    * Test if the differences follow a normal distribution
+    * Estimate the mean and the variance of the sample
+    * Calculate the z-statistic and perform the inference using the z-test.
+    * Calculate the significance, power, and p-statistic of the test.
+
+```{r}
+# Hint: You can obtain the difference between consecutive years as follows:
+consecutive.difference = diff(nhtemp) #hint! :-)
+
+```
+
+**Q2** The dataset "sleep" shows an experiment where a group of 10 patients tested two drugs for sleeping (1 and 2).
+Let's compare the performance of drugs 1 and 2 using statistical inference.
+
+- First, make a basic analysis of the two drugs: Calculate the mean, standard deviation, and 90% confidence interval for both samples. Plot the confidence intervals.
+```{r}
+
+```
+
+- Perform a two-sample t-test, and a paired t-test to compare the results of the two drugs
+```{r}
+
+```
+
+- Verify the assumptions of the tests for this data
+```{r}
+
+```
+
+- Describe the results and conclusions of the test, making sure to mention the power and confidence of the results obtained.

@@ -1,0 +1,397 @@
+---
+title: "Chapter 4"
+subtitle: "Orthogonality"
+author: | 
+  | Yuri Lavinas
+  | Master Student - University of Tsukuba
+date: "05/25/2018"
+
+output: 
+  beamer_presentation:
+    slide_level: 3
+    theme: "Szeged"
+    fonttheme: "professionalfonts"
+    # citation_package: natbib
+    latex_engine: "pdflatex"
+    includes:
+          in_header: header_pagenrs.tex
+          after_body: after_body.tex
+bibliography: bib.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+
+library(png)
+library(grid)
+library(ggplot2)
+library(gridExtra)
+```
+
+# Orthogonality
+## Introduction
+### Why consider orthogonality?
+
+- Gaussian elimination - standard algorithm used in numerous applications.
+    - May not be sufficient: Most important data X Less important data.
+
+- Less important - Linearly dependent.
+- Most important - close to orthogonal, very linearly. independent.
+
+### Example 4.1
+
+- Orthogonal columns determine the plane much better.
+
+Let A and B be matrices in the $\mathbb{R}^3$:
+
+$$
+A =\left(\begin{array}{ccc} 
+1 & 1.05\\
+1 & 1\\
+1 & 0.95
+\end{array}\right),
+$$
+
+
+$$
+B =\left(\begin{array}{cc} 
+1 & 1/\sqrt(2)\\ 
+1 & 0\\ 
+1 & 1/\sqrt(2)
+\end{array}\right).
+$$ 
+
+### Figure 4.1
+
+\centering
+```{r fig.width=4.5, fig.height=10,echo=FALSE}
+img <- readPNG("images/figure1.png")
+ grid.raster(img)
+```
+
+
+## Section 4.1
+###Preposition 4.2
+
+-  Two vectors $v$ and $u$ are orthogonal if $x^{T}y = 0$, $\cos\theta(x, y) = 0$.
+
+\textit{Let $q_i, j = 1, 2, ... ,n$, be orthogonal, $q_i^{T}q_j = 0$, $i \neq j$. Then they are linearly independent.}\newline
+
+\textit{Proof.} Assume the vectors are linearly dependent. From preposition 2.2 there exists a $q_k$ such that
+
+$$ q_k =\sum_{j \neq k} \alpha_j q_. $$
+
+### Proof 4.2
+ Given
+$$ q_k =\sum_{j \neq k} \alpha_j q_. $$
+
+Multiplying this equation by $q_k$:
+
+ $$ q_k^Tq_k =\sum_{j \neq k} \alpha_j q_k^Tq_j, $$ 
+ 
+Since the vectors are orthogonal:
+ 
+ $$ q_k^Tq_k =\sum_{j \neq k} \alpha_j q_k^Tq_j = 0,$$  which is a contradiction (we assumed that they are linealy dependent).
+
+###  Normalization
+
+Let the set of orthogonal vectors $q_j$ j = 1,2, ..., m in $\mathbb{R}^M$, be normalized:
+
+$$||q_i||_2 = 1.$$
+
+They are called \textit{orthonormal} and constitute \textit{orthonormal basis} in $\mathbb{R}^M$.
+
+
+
+A square matrix
+
+$$ Q = (q_1 \enspace q_2 \enspace \cdots \enspace  q_m) \in \mathbb{R}^{M\times M}$$
+
+A matrix Q, whose columns are orthonormal, is called orthogonal matrix.
+
+Orthogonal matrices satisfies important properties. 
+
+### Preposition 4.3 - \textbf{Proof.}
+
+- \textit{An orthogonal matrix Q satisfies Q$^T$Q = I}
+
+
+
+$$Q^TQ = (q_1 \enspace q_2 \enspace \cdots \enspace  q_m)^T  (q_1 \enspace q_2 \enspace \cdots \enspace  q_m) = \left(\begin{array}{c} 
+q_1^T \\
+q_2^T \\
+\vdots \\
+q_m^T \\
+\end{array}\right) (q_1 \enspace q_2 \enspace \cdots \enspace  q_m)$$
+
+
+$$
+\left(\begin{array}{cccc} 
+q_{1}^{T}q_{1} & q_{1}^{T}q_{2} & \cdots & q_{1}^{T} q_{m} \\ 
+q_{2}^{T}q_{1} & q_{2}^{T}q_{2} & \cdots & q_{2}^{T} q_{m} \\ 
+\vdots & \vdots &  & \vdots\\ 
+q_{m}^{T}q_{1} & q_{m}^{T}q_{2} & \cdots &  q_{m}^{T}q_{m}
+\end{array}\right)
+=
+\left(\begin{array}{cccc} 
+1 & 0 & \cdots & 0 \\ 
+0 & 1 & \cdots & 0 \\ 
+\vdots & \vdots &  & \vdots\\ 
+0 & 0 & \cdots &  1
+\end{array}\right),
+$$ due to orthogonality.
+
+### Proposition 4.4 and 4.5
+
+- \textit{An orthogonal matrix Q $\in \mathbb{R}^{m\times m}$ has rank m, and, since $Q^{T}Q = I$, its inverse is equal to $Q^{-1} = Q^{T}$.}
+
+- \textit{The rows of an orthogonal matrix are orthogonal, i.e., $QQ^{T}=I$}
+
+### Proof.
+
+\textbf{Proof.} Let $x$ be an arbitrary vector. We shall show that $QQ^{T}x=x$. Given $x$ there is a uniquely determined vector $y$, such that $Qy = c$, since $Q^{-1}$ exists. Then 
+
+$$QQ^{T}x = QQ^{T}Qy = Qy = x.$$
+
+Since x is arbitrary, it follows that $QQ^{T} = I.$
+
+### Proposition 4.6
+
+- \textit{The product of two orthogonal matrices is orthogonal.}
+
+\textbf{Proof.} Let $Q$ and $P$ be orthogonal, and put $X = PQ.$ Then
+
+$$X^{T}X = (PQ)^{T}PQ=Q^{T}P^{T}PQ=Q^{T}Q=I$$
+
+- Any orthonormal basis of a subspace of $\mathbb{R}^{m}$ can be enlarged to an orthonormal basis of the whole space.
+
+### Proposition 4.7
+
+\textit{Given a matrix $Q_1 \in \mathbb{R}^{m\times k}$, with orthonormal columns, there exists a matrix $Q_2 \in \mathbb{R}^{m-k}$ such that $Q = (Q_{1}Q_{2})$ is an orthogonal matrix. }
+
+This is a standard result in linear algebra. 
+<!-- Q can be computed, for instance, with the Gran Schmidt method. -->
+
+### Proposition 4.8
+
+\textit{The Euclidean length of a vector is invariant under an orthogonal transformation Q.}
+
+\textbf{Proof.} $||Q_{x}||^{2}_{2} = (QX)^{T}Qx = x^{T}Q^{T}Qx = x^{T}x = ||x||^{2}_ {2}$
+
+Also, the corresponding matrix norm and the Frobenius norm are invariant under orthogonal transformations.
+
+### Proposition 4.9
+
+\textit{Let $U \in \mathbb{R}^{m\times m}$ and $V\in \mathbb{R}^{n\times n}$ be orthogonal. Then for any $A \in \in \mathbb{R}^{m\times n}$},
+
+$$ ||UAV||_{2} = ||A||_{2} $$
+$$ ||UAV||_{F} = ||A||_{F} $$
+ \textbf{Proof.} 
+ The first equality is proved using Proposition 4.8.
+ For the second, the proof needs the following alternative expression, $||A||^{2}_{F} = tr(A^{T}A)$, for the Frobenius normal and the identity tr(BC) = tr(CB).
+
+## Section 4.2
+### Elementary Orthogonal Matrices
+- Use elementary orthogonal matrices to reduce matrices to compact form.
+  - We will transform a matrix $A \in \mathbb{R}^{m\times n}, m>n$, to triangular form.
+
+### Plane rotations
+
+A 2x2 plane rotation matrix 
+
+$$ G = \left(\begin{array}{cc}
+c &  s \\
+-s & c\ \\
+\end{array}\right), c^{2} + s^{2} = 1$$
+
+is orthogonal.
+
+- Multiplying G by a vector x rotates the vector in clockwise direction by a angle $\theta$, where c = $\cos(\theta)$.
+
+
+### Usage
+- A plane rotation can be used to zero the second element of a vector x by choosing $c = x1 /  \sqrt{x^{2}_ {1} + x^{2}_{2}}$ and $s = x2 /  \sqrt{x^{2}_ {1} + x^{2}_{2}}$.
+
+
+$$\dfrac{1}{\sqrt{x^{2}_ {1} + x^{2}_{2}}} \left(\begin{array}{cc} 
+x_1 & x_2\\
+-x_2 & x_1
+\end{array}\right) \left(\begin{array}{c} 
+x_1 \\
+x_2
+\end{array}\right) = \left(\begin{array}{cc} 
+\sqrt{x^{2}_ {1} + x^{2}_{2}}\\
+0
+\end{array}\right)$$
+
+It is possible to manipulate vectors and matrices of arbitrary dimension by embedding two-dimensional rotation in a larger matrix.
+
+### Example 4.10
+
+We can choose $c$ and $s$, in
+
+$$G = \left(\begin{array}{cccc} 
+1 & 0 & 0 & 0 \\
+1 & c & 0 & s \\
+1 & 0 & 1 & 0 \\
+1 & -s & 0 & c \\
+\end{array}\right)$$
+
+so that the 4$^{th}$ element of the vector $x \in \mathbb{R}^{4}$ by rotating the plane $(2,4)$.
+
+### Code 4.10
+
+\noindent The MATLAB script follows:\newline
+
+\setlength{\leftskip}{2cm}
+\indent x = [1;2;3;4];\newline
+\indent sq = sqrt(x(2)^2 + x(4)^2);\newline
+\indent c = x(2)/sq; s = x(4)/sq;\newline
+\indent G = [1 0 0 0; 0 c 0 s; 0 0 1 0; 0 -s 0 c];\newline
+\indent y = G * x
+
+\setlength{\leftskip}{0pt}
+
+given the result:
+ 
+
+ 
+\setlength{\leftskip}{2cm}
+\indent  y = 1.0000\newline
+\indent 4.4721\newline
+\indent 3.0000\newline
+\indent 0
+
+\setlength{\leftskip}{0pt}
+
+### Transform an arbitrary vector 
+
+Using a sequence of of planes rotations,  is possible to transform any vector to a multiple of a unit vector. 
+
+Given a $x \in \mathbb{R}^{4}$, we transform in to $ke_{1}$. First, by a rotation $G_{3}$ in the plane (3,4) the last element became zero:
+
+
+$$G = \left(\begin{array}{cccc} 
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & s \\
+0 & 0 & c_{1} & s_{1} \\
+0 & 0 & -s_{1} & c_{1} \\
+\end{array}\right)\left(\begin{array}{c} 
+\times \\
+\times \\
+\times \\
+\times \\
+\end{array}\right) = \left(\begin{array}{c} 
+\times \\
+\times \\
+* \\
+0 \\
+\end{array}\right).$$
+
+### Next rotation
+
+A rotation $G_{2}$ in the plane (2,3) the element in position 3 became zero:
+
+$$G = \left(\begin{array}{cccc} 
+1 & 0 & 0 & 0 \\
+0 & c_{2} & s_{2} & 0 \\
+0 & -s_{2} & c_{2} & 0 \\
+0 & 0 & 0 & 1 \\
+\end{array}\right)\left(\begin{array}{c} 
+\times \\
+\times \\
+\times \\
+0 \\
+\end{array}\right) = \left(\begin{array}{c} 
+\times \\
+* \\
+0 \\
+0 \\
+\end{array}\right).$$
+
+### Final rotation
+
+And finally, for the second element
+
+$$G = \left(\begin{array}{cccc} 
+c_{3} & s_{3} & 0 & 0 \\
+-s_{3} & c_{3} & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 \\
+\end{array}\right)\left(\begin{array}{c} 
+\times \\
+\times \\
+0 \\
+0 \\
+\end{array}\right) = \left(\begin{array}{c} 
+K \\
+0 \\
+0 \\
+0 \\
+\end{array}\right).$$
+
+
+### Summary
+
+- According to proposition 4.8 the Euclidean length is preserved, and therefore we know that k = $||x||_{2}$.
+
+- Since the product of orthogonal matrices is orthogonal (Proposition 5.6) the matrix $P = G_{1}G_{2}G_{3}$ is orthogonal, and the overall results is $Px = ke_{1}$.
+
+-  Rotations are very flexible and can be used efficiently for problems with a sparsity structure, e.g., band matrices. 
+
+- For dense matrices they require more flops than Householder transformations (section 4.3).
+
+### Example 4.12
+
+ - In the last MATLAB example, a 2 x 2 matrix was explicit embedded in a matrix of larger dimension. This is a waste of operations, since the execution of the code does not consider that only two rows are changed. 
+  - The whole matrix multiplication is performed - $2n^{3}$ flops, for a matrix of dimension $n$.
+  - The following MATLAB code illustrates an alternative approach to save operations (and storage).
+
+### Code 4.12
+\noindent The MATLAB script follows:\newline
+
+
+\noindent function [c, s] = rot(x, y);
+\vspace{-1.5mm}
+
+\setlength{\leftskip}{1cm}
+\indent sq = sqrt(x^2 + y^2);\newline
+\indent c = x/sq; s= y/sq;\newline
+
+\setlength{\leftskip}{0pt}
+
+\noindent function X = approt(c, s, i, ,j, X);
+\vspace{-0.5mm}
+
+\setlength{\leftskip}{1cm}
+\indent X([i, j],:) = [c s; -s c]*X([i,j],:);\newline
+
+\setlength{\leftskip}{0pt}
+
+### Code 4.12
+\noindent Continuing:\newline
+
+\noindent x[1;2;3;4];
+
+\noindent for i=3:-1:1
+\vspace{-1.5mm}
+
+\setlength{\leftskip}{0.5cm}
+\indent [c,s] = rot(x(i),x(i+1));
+
+\setlength{\leftskip}{0pt}
+\indent end;\newline
+
+\noindent x = 5.4772
+\vspace{-0.5mm}
+
+\setlength{\leftskip}{1cm}
+\indent 0\newline
+\indent 0\newline
+\indent 0\newline
+
+\setlength{\leftskip}{0pt}
+
+- After the reduction the first component of $x$ is equal to $||x||_{2}$.

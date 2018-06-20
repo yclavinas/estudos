@@ -1,0 +1,116 @@
+\begin{thebibliography}{15}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cai et~al.(2015)Cai, Li, Fan, and Zhang]{cai2015external}
+Xinye Cai, Yexing Li, Zhun Fan, and Qingfu Zhang.
+\newblock An external archive guided multiobjective evolutionary algorithm
+  based on decomposition for combinatorial optimization.
+\newblock \emph{IEEE Transactions on Evolutionary Computation}, 19\penalty0
+  (4):\penalty0 508--523, 2015.
+
+\bibitem[Coello et~al.(2007)Coello, Lamont, Van~Veldhuizen,
+  et~al.]{coello2007evolutionary}
+Carlos A~Coello Coello, Gary~B Lamont, David~A Van~Veldhuizen, et~al.
+\newblock \emph{Evolutionary algorithms for solving multi-objective problems},
+  volume~5.
+\newblock Springer, 2007.
+
+\bibitem[Giagkiozis et~al.(2014)Giagkiozis, Purshouse, and
+  Fleming]{giagkiozis2014generalized}
+Ioannis Giagkiozis, Robin~C Purshouse, and Peter~J Fleming.
+\newblock Generalized decomposition and cross entropy methods for
+  many-objective optimization.
+\newblock \emph{Information Sciences}, 282:\penalty0 363--387, 2014.
+
+\bibitem[Gong et~al.(2015)Gong, Chen, Zhan, Zhang, Li, Zhang, and
+  Li]{gong2015distributed}
+Yue-Jiao Gong, Wei-Neng Chen, Zhi-Hui Zhan, Jun Zhang, Yun Li, Qingfu Zhang,
+  and Jing-Jing Li.
+\newblock Distributed evolutionary algorithms and their models: A survey of the
+  state-of-the-art.
+\newblock \emph{Applied Soft Computing}, 34:\penalty0 286--300, 2015.
+
+\bibitem[Ishibuchi et~al.(2009)Ishibuchi, Sakane, Tsukamoto, and
+  Nojima]{ishibuchi2009adaptation}
+Hisao Ishibuchi, Yuji Sakane, Noritaka Tsukamoto, and Yusuke Nojima.
+\newblock Adaptation of scalarizing functions in moea/d: An adaptive
+  scalarizing function-based multiobjective evolutionary algorithm.
+\newblock In \emph{International Conference on Evolutionary Multi-Criterion
+  Optimization}, pages 438--452. Springer, 2009.
+
+\bibitem[Ishibuchi et~al.(2010)Ishibuchi, Sakane, Tsukamoto, and
+  Nojima]{ishibuchi2010simultaneous}
+Hisao Ishibuchi, Yuji Sakane, Noritaka Tsukamoto, and Yusuke Nojima.
+\newblock Simultaneous use of different scalarizing functions in moea/d.
+\newblock In \emph{Proceedings of the 12th annual conference on Genetic and
+  evolutionary computation}, pages 519--526. ACM, 2010.
+
+\bibitem[Jiang et~al.(2016)Jiang, Feng, Yang, Heng, Ong, Zhang, Tan, and
+  Cai]{jiang2016towards}
+Siwei Jiang, Liang Feng, Dazhi Yang, Chen~Kim Heng, Yew-Soon Ong,
+  Allan~NengSheng Zhang, Puay~Siew Tan, and Zhihua Cai.
+\newblock Towards adaptive weight vectors for multiobjective evolutionary
+  algorithm based on decomposition.
+\newblock In \emph{Evolutionary Computation (CEC), 2016 IEEE Congress on},
+  pages 500--507. IEEE, 2016.
+
+\bibitem[Qi et~al.(2014)Qi, Ma, Liu, Jiao, Sun, and Wu]{qi2014moea}
+Yutao Qi, Xiaoliang Ma, Fang Liu, Licheng Jiao, Jianyong Sun, and Jianshe Wu.
+\newblock Moea/d with adaptive weight adjustment.
+\newblock \emph{Evolutionary computation}, 22\penalty0 (2):\penalty0 231--264,
+  2014.
+
+\bibitem[Robles et~al.(2009)Robles, Alcal{\'a}, Ben{\'\i}tez, and
+  Herrera]{robles2009evolutionary}
+Ignacio Robles, Rafael Alcal{\'a}, Jos{\'e}~Manuel Ben{\'\i}tez, and Francisco
+  Herrera.
+\newblock Evolutionary parallel and gradually distributed lateral tuning of
+  fuzzy rule-based systems.
+\newblock \emph{Evolutionary Intelligence}, 2\penalty0 (1-2):\penalty0 5, 2009.
+
+\bibitem[Trivedi et~al.(2017)Trivedi, Srinivasan, Sanyal, and
+  Ghosh]{trivedi2017survey}
+Anupam Trivedi, Dipti Srinivasan, Krishnendu Sanyal, and Abhiroop Ghosh.
+\newblock A survey of multiobjective evolutionary algorithms based on
+  decomposition.
+\newblock \emph{IEEE Transactions on Evolutionary Computation}, 21\penalty0
+  (3):\penalty0 440--462, 2017.
+
+\bibitem[Wang et~al.(2016)Wang, Zhang, Zhou, Gong, and Jiao]{wang2016adaptive}
+Zhenkun Wang, Qingfu Zhang, Aimin Zhou, Maoguo Gong, and Licheng Jiao.
+\newblock Adaptive replacement strategies for moea/d.
+\newblock \emph{IEEE transactions on cybernetics}, 46\penalty0 (2):\penalty0
+  474--486, 2016.
+
+\bibitem[Zhang et~al.(2016)Zhang, Zhang, Gao, and Song]{zhang2016self}
+Hu~Zhang, Xiujie Zhang, Xiao-Zhi Gao, and Shenmin Song.
+\newblock Self-organizing multiobjective optimization based on decomposition
+  with neighborhood ensemble.
+\newblock \emph{Neurocomputing}, 173:\penalty0 1868--1884, 2016.
+
+\bibitem[Zhang and Li(2007)]{zhang2007moea}
+Qingfu Zhang and Hui Li.
+\newblock Moea/d: A multiobjective evolutionary algorithm based on
+  decomposition.
+\newblock \emph{IEEE Transactions on evolutionary computation}, 11\penalty0
+  (6):\penalty0 712--731, 2007.
+
+\bibitem[Zhang et~al.(2009)Zhang, Liu, and Li]{zhang2009performance}
+Qingfu Zhang, Wudong Liu, and Hui Li.
+\newblock The performance of a new version of moea/d on cec09 unconstrained mop
+  test instances.
+\newblock In \emph{Evolutionary Computation, 2009. CEC'09. IEEE Congress on},
+  pages 203--208. IEEE, 2009.
+
+\bibitem[Zhou and Zhang(2016)]{zhou2016all}
+Aimin Zhou and Qingfu Zhang.
+\newblock Are all the subproblems equally important? resource allocation in
+  decomposition-based multiobjective evolutionary algorithms.
+\newblock \emph{IEEE Transactions on Evolutionary Computation}, 20\penalty0
+  (1):\penalty0 52--64, 2016.
+
+\end{thebibliography}

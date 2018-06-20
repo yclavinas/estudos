@@ -1,0 +1,53 @@
+---
+title: "Resumo da Semana"
+subtitle: "Resum"
+author: | 
+  | Yuri Lavinas
+date: "05/25/2018"
+
+output: 
+  beamer_presentation:
+    slide_level: 1
+    theme: "Szeged"
+    fonttheme: "professionalfonts"
+    citation_package: natbib
+    latex_engine: "pdflatex"
+    includes:
+          in_header: header_pagenrs.tex
+          # after_body: after_body.tex
+bibliography: bib.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+
+# Resumo da semana
+
+1. Leitura do artigo "Are all sub-problems equally important? Resource allocation in decomposition-based multiobjective evolutionary Algorithms"
+    - Implementado com adaptacoes!
+  
+2. Proposta: implementar islands como MOEA/D com diversas configuracoes de parametros. 
+    - Leitura de diversos alguns poucos artigos sobre paralelizacao do MOEA/D - problemas com escalabilidade e/ou nenhuma melhoria na qualidade das solucoes.
+
+# Proposal
+
+1. \textbf{Period of interaction} Several (N) MOEA/D running in parallel with different parameters.
+    - Which parameters? Sensitivity Analysis! 
+2. "Migration": Synchronously choose the the best configuration, how? Hypervolue, IGD? Other EMOA metrics?
+3. Define the next populations (N) from the big group of pareto sets of the several MOEA/Ds. Next slide.
+4. Input this new populations (N) to the several (N) MOEA/Ds (with different parameters then before?). Go to 1.
+
+# Best configuration
+
+3. Randomly.
+
+2. Dual populations (external population).
+    - Store the visited non-dominated solutions with a weight vector, and then add/remove sub-problems given crowded/sparse regions by adjusting the weight vector, @qi2014moea.
+    - Stored the non-dominated solutions such that the Hyper Volume is maximized, @jiang2016towards.
+    - External population is updated using non-dominates sorting and crowding distance <- NSGA-II. Also it is used to guide the allocation of computational resources to a sub-problem given its contribution, @cai2015external.
+
+

@@ -1,0 +1,320 @@
+---
+title: "MOEA/D"
+subtitle: "MOEA/D - Restart Strategy"
+author: | 
+  | Yuri Lavinas
+  | Master Student - University of Tsukuba
+date: "06/27/2018"
+
+output: 
+  beamer_presentation:
+    slide_level: 3
+    theme: "Szeged"
+    fonttheme: "professionalfonts"
+    citation_package: natbib
+    latex_engine: "pdflatex"
+    includes:
+          in_header: header_pagenrs.tex
+          after_body: after_body.tex
+bibliography: bib.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(cache = TRUE)
+library(png)
+library(grid)
+library(ggplot2)
+library(gridExtra)
+```
+
+# MOP
+## Multi-objective Problems
+### What is MOP?
+Multiobjective Optimization Problem have $m$ multiple objective functions that must be optimized simultaneously.
+
+Maximize$^1$ $F(x) = (f_1(x), f_2(x), ..., f_m(x))$,
+
+subject to $x$ in $\Omega$.
+
+- $F(x)$ objective functions;
+- $f_i$ is the i-th objective to be maximized;
+- $x$ is the decision vector;
+- $\Omega$ is the decision space.
+ 
+ \footnotesize $^1$ All definitions are for maximization. Following inequalities should be reversed if the goal is to minimize.
+
+### Why is MOP interesting?
+
+1. Many real-world scientific and engineering are MOP.
+    - Water quality control, Groundwater pollution re-mediation, Design of marine vehicles, ... @coello2007evolutionary.
+    - Petrol extraction.
+2. Hard problems: to balance the interests of the multi-objective as a whole is hard. 
+
+
+## Pareto Set
+### What is Pareto Set?
+
+Objectives may be conflicting
+    - The goal is to find good trade-off.
+
+- Set of solutions.
+
+Set of *optimum solutions* - Pareto set.
+
+- Non-dominated solutions: no single solution provides a better trade-off in all objectives.
+
+### What is Pareto Set?
+
+\centering
+```{r fig.width=4.5, fig.height=10,echo=FALSE}
+img <- readPNG("images/pareto_front_diff_scalarizins_f.png")
+ grid.raster(img)
+```
+
+\tiny From @ishibuchi2009adaptation.
+
+
+## Pareto Set
+### Non-dominated solutions
+
+1. Let $u = (u_1, ..., u_m)$ and $v = (v_1, ..., v_m)$ vectors in $\Omega$ (the decision space).
+    - $\forall i:u$ dominates $v$ if $f_i(u) \leq f_i(v)$ and $\exists j:f_j(u) < f_j(v)$.
+    - u dominates v, v is dominated by u, u is better that v.
+
+2. A point $x^*$ in $\Omega$  is called *Pareto Optimal* if no other point dominates $x^*$. 
+    <!-- - $\nexists F(y^*)$ that dominates $F(x^*)$ -->
+
+## Pareto Set
+
+### Pareto Front
+\centering
+```{r fig.width=3, fig.height=15,echo=FALSE}
+img <- readPNG("images/pareto_dominated.png")
+ grid.raster(img)
+```
+\tiny From: http://www.cenaero.be/Page.asp?docid=27103&langue=EN
+
+### Pareto Front
+
+1. The set of all Pareto Optimal is called the *Pareto Set*. 
+    - $P^*$ = {$x \in \Omega:\nexists y \in \Omega$ and $F(y) \leq F(x)$}
+3. **Pareto Front** is the image of the Pareto Set in the objective space.
+    - PF = {$F(x) = (f_i(x), ..., f_m(x)): x \in P^*$}
+
+
+
+# MOEA/D
+## MOEA/D
+### Decompostion
+
+MOEA/D represents a class of population-based meta-heuristics for solving MultiObjective Problems (MOPs).
+
+- It is based on decomposition - one kind of scalarizing function
+  - One multi-objective problem becomes various single-objective sub-problems.
+  <!-- - All sub-problems are solved in parallel.  -->
+  - A decomposition strategy generates weight vectors that defines the sub-problems.
+  
+### Decomposition - 2 and 3 objective functions
+
+\centering
+```{r fig.width=4.5, fig.height=13,echo=FALSE}
+img <- readPNG("images/decomp2.png")
+ grid.raster(img)
+```
+
+\tiny From: @chugh2017handling.
+
+## MOEA/D
+### Why use decomposition?
+
+- It may be good at generating an even distribution of solutions in MOPs;
+- It reduces the computation complexity when compared to other algorithms (NSGA-II) (at each generation), @zhang2009performance;
+<!-- - An optimal solution of a set of scalar optimization problems can be a Pareto optimal solution, under mild conditions; -->
+<!-- - All solutions can be compared based on their objective function values; -->
+<!-- - It is simple to find a solution to multi single-objective problems than for a multi-objective problem; -->
+- Fitness assignment and diversity maintenance become easier to handle.
+
+### Decomposition + Aggregation Function
+
+\centering
+```{r fig.width=2.7, fig.height=9,echo=FALSE}
+img <- readPNG("images/decomp.png")
+ grid.raster(img)
+```
+
+
+## MOEA/D
+### Components of the MOEA/D
+
+- Decomposition strategy: decomposes w/ weight vectors;
+- Aggregation function:  weight vector => single-objective sub-problems;
+- Neighbourhood assignment strategy: Relationship between sub-problems;
+- Variation Stack: New candidates solutions;
+- Update Strategy: Maintain/discard candidate solutions;
+- Constraint handling method: Constraint violation;
+- Termination Criteria: when to stop the search.
+
+
+
+$f_{3}(x) = F * w_{3}$
+
+In general, $f_{i}(x) = F * w_{i}$
+
+\tiny Figure from: @chugh2017handling.
+
+### Simple Visualization 
+
+\centering
+```{r fig.width=3.8, fig.height=9,echo=FALSE}
+img <- readPNG("images/MOEAD.png")
+ grid.raster(img)
+```
+
+# Modifications - MOEA/D
+## Modifications
+### Modifications Already integrated
+
+1. Cellular GA- proposed in the context of MOEA/D by @ishibuchi2009adaptation.
+2. Latin Hypercube Sample - an alternative approach in initializing populations. 
+3. On-line Resource Allocation - proposed in the context of MOEA/D by @zhou2016all.
+4. Bet-and-Run: A kind of restart strategy - proposed in the context of SOP by @.
+
+## Cellular GA 
+### Cellular GA and MOEA/D @ishibuchi2009adaptation
+- Why?  MOEA/D can be viewed as a  Cellular GA (cGA).
+    - A cell can be seen as a specific "Neighbourhood assignment strategy", where each cell has its own weight vector.
+
+- cGA is well explored in the context of single-objective problems (SOP).
+
+### Cell and neighbors
+\raggedleft
+```{r fig.width=3, fig.height=8.5,echo=FALSE}
+myimages <- list.files("images_sop/", pattern = ".png", full.names = TRUE)
+knitr::include_graphics(myimages)
+```
+
+
+
+### MOEA/D as cGA
+- The main characteristic feature of MOEA/D as a cGA is the use of **local replacement** in addition to local selection. 
+    - Generated offspring for a cell is compared with not only the current solution of the cell but also its neighbours for possible replacement.
+    
+- Local replacement neighbourhood has greater effect on the performance than local selection neighbourhood.
+    - Increasing its size tends to be better.
+
+
+
+## Latin Hypercube Sample
+### What is Latin Hypercube Sample 
+
+- Latin Hypercube Sample (LHS) was developed to generate a distribution of collections of parameter values from a multidimensional distribution, for more information see @stein1987large.
+
+### How it affects MOEA/D
+
+- As defined in @mckay1979comparison, it could be a good method to use for selecting values of input variables. 
+
+- Therefore we expect that by using it, the initial population (ours input variable) would be better distributed along the search space.
+
+## Online Resource Allocation - @zhou2016all.
+### What is Online Resource Allocation 
+
+- On-line Resource Allocation (ONRA) is an adaptation strategy that aim to adjust the behaviour of an algorithm in an on-line manner to suit the problem in question.
+
+
+### How it affects MOEA/D - @zhou2016all.
+
+- Some parts of the Pareto Front can be more difficult to approximate that others. To better explore the different parts of the Pareto Front, different computational resources can be allocated to different sub-problems.
+
+- In this case the resources re-allocated is the number of functions evaluations.
+  - From an equal amount to every sub-problem to an amount related to the difficulty of the sub-problem.    
+
+
+## Restart Strategy 
+### What is Restart Strategy 
+
+- Restart Strategy is a strategy used to avoid heavy-tailed running time distributions @gomes2000heavy.
+
+-  If a execution of an algorithm does not conclude within a pre-determined limit or if the solution quality is unsatisfactory, we restart the algorithm @lissovoi2017theoretical.
+
+
+### Bet-and-Run framework 
+
+- It is defined in @fischetti2014exploiting. as a number of short runs with randomized initial conditions, bet on the most promising run, and bring it to completion.
+
+- To the best of our knowledge, only applied with EA in the context of SOP.
+
+### How it affects MOEA/D - @lissovoi2017theoretical.
+
+- Initialisation can have a small beneficial effect even on very easy functions.
+
+- Counermeasure when problems with promising and deceptive regions are encountered.
+
+- Additional speed-up heuristic.
+
+# Pilot Experiments
+## Preliminary Results
+### Experimental Design
+1. Simple experiments - Check my understand and get insights.
+2. DTLZ[1~7] MOP benchmark functions - Available from the MOEADr package.
+3. Every variation will be discussed based on the pilot data showed in the next slide by a box-plot figure.
+4. Number of evaluations: 5 * 10 ^ 4.
+5. Based on the common variation: MOEA/D (variations 1 and 2 from MOEADr) and MOEA/D-DE.
+
+
+### Boxplot
+\centering
+```{r fig.width=4, fig.height=15,echo=FALSE}
+img <- readPNG("images/all_pilot_results.png")
+ grid.raster(img)
+```
+
+
+## Discussions 
+### cGA
+1. MOEA/D as cGA has a high sensitivity on the parameters of local replacement and local selection.
+2. Decreasing the size of competition neighbourhood increases. the non-dominated solutions, but degrades the search ability of the MOEA/D. **As already observed in @ishibuchi2009adaptation **.
+
+### LHS
+1. In most cases improves the results by a little - All but with naive restart strategy. 
+2. It is cheap in terms of computational cost - it is only used once at each execution.
+
+- This improve seems not to be significant.
+
+### ONRA
+1. Computational  costly -> more interactions than without it and we need to calculate the resources allocation every interaction.
+2. It was beneficial in a few cases, while in others the overall quality decreased.
+
+### Restart Strategy
+1. It is the variation added to the MOEA/D which lead to better final quality results.
+2. Its performances become worse when combined with other variations.
+
+ 
+### Future works
+1. cGA - On the fly parameter adaptation.
+2. LHS - Suggestions?
+3. ONRA
+ - Review my implementation and try the other methods proposed in @zhou2016all. Only the one considered to be the "best" was implemented.
+4. Bet-and-Run strategy
+ - Use this strategy to add some adaptive technique.
+ - Use more instances based on the best one, instead of only one - dynamic bet-and-run.
+ - Hierarchical bet-and-run - here it has only 2 phases.
+ - Suggestions?
+
+
+# Evaluation Metrics
+## Indicators
+### Most Frequently Used
+
+1. Hyper-volume.
+2. R1, R2, R3 indicators.
+3. IGD.
+4. Addictive epsilon indicator.
+
+## Hypervolume
+### Considerations
+
+## References
+
+\small
