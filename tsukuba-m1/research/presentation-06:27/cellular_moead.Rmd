@@ -22,7 +22,7 @@ link-citations: yes
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-knitr::opts_chunk$set(cache = TRUE)
+knitr::opts_chunk$set(cache = FALSE)
 library(png)
 library(grid)
 library(ggplot2)
@@ -109,7 +109,7 @@ img <- readPNG("images/pareto_dominated.png")
 ## MOEA/D
 ### Decompostion
 
-MOEA/D represents a class of population-based meta-heuristics for solving MultiObjective Problems (MOPs).
+MOEA/D represents a class of population-based meta-heuristics for solving Multi Objective Problems (MOPs).
 
 - It is based on decomposition - one kind of scalarizing function
   - One multi-objective problem becomes various single-objective sub-problems.
@@ -143,6 +143,11 @@ img <- readPNG("images/decomp2.png")
 img <- readPNG("images/decomp.png")
  grid.raster(img)
 ```
+\raggedright \tiny Figure from: @chugh2017handling.
+\centering
+$f_{3}(x) = F * w_{3}$
+
+In general, $f_{i}(x) = F * w_{i}$
 
 
 ## MOEA/D
@@ -158,20 +163,6 @@ img <- readPNG("images/decomp.png")
 
 
 
-$f_{3}(x) = F * w_{3}$
-
-In general, $f_{i}(x) = F * w_{i}$
-
-\tiny Figure from: @chugh2017handling.
-
-### Simple Visualization 
-
-\centering
-```{r fig.width=3.8, fig.height=9,echo=FALSE}
-img <- readPNG("images/MOEAD.png")
- grid.raster(img)
-```
-
 # Modifications - MOEA/D
 ## Modifications
 ### Modifications Already integrated
@@ -179,23 +170,14 @@ img <- readPNG("images/MOEAD.png")
 1. Cellular GA- proposed in the context of MOEA/D by @ishibuchi2009adaptation.
 2. Latin Hypercube Sample - an alternative approach in initializing populations. 
 3. On-line Resource Allocation - proposed in the context of MOEA/D by @zhou2016all.
-4. Bet-and-Run: A kind of restart strategy - proposed in the context of SOP by @.
+4. Bet-and-Run: A kind of restart strategy - in the context of single-objective problems (SOP) by @friedrich2017generic
 
 ## Cellular GA 
 ### Cellular GA and MOEA/D @ishibuchi2009adaptation
 - Why?  MOEA/D can be viewed as a  Cellular GA (cGA).
     - A cell can be seen as a specific "Neighbourhood assignment strategy", where each cell has its own weight vector.
 
-- cGA is well explored in the context of single-objective problems (SOP).
-
-### Cell and neighbors
-\raggedleft
-```{r fig.width=3, fig.height=8.5,echo=FALSE}
-myimages <- list.files("images_sop/", pattern = ".png", full.names = TRUE)
-knitr::include_graphics(myimages)
-```
-
-
+- cGA is well explored in the context of SOP.
 
 ### MOEA/D as cGA
 - The main characteristic feature of MOEA/D as a cGA is the use of **local replacement** in addition to local selection. 
@@ -225,10 +207,10 @@ knitr::include_graphics(myimages)
 
 ### How it affects MOEA/D - @zhou2016all.
 
-- Some parts of the Pareto Front can be more difficult to approximate that others. To better explore the different parts of the Pareto Front, different computational resources can be allocated to different sub-problems.
+- Some sub-problems can be more difficult to approximate that others. To better explore them, different computational resources are allocated to different sub-problems.
 
-- In this case the resources re-allocated is the number of functions evaluations.
-  - From an equal amount to every sub-problem to an amount related to the difficulty of the sub-problem.    
+- The resources re-allocated is *the number of functions evaluations*.
+    - From an equal amount to every sub-problem to an amount related to the difficulty of the sub-problem.    
 
 
 ## Restart Strategy 
@@ -249,10 +231,53 @@ knitr::include_graphics(myimages)
 
 - Initialisation can have a small beneficial effect even on very easy functions.
 
-- Counermeasure when problems with promising and deceptive regions are encountered.
+- Countermeasure when problems with promising and deceptive regions are encountered.
 
 - Additional speed-up heuristic.
 
+# Evaluation Metrics
+## Indicators
+### Unary Indicators
+
+ - Measure Pareto Sets independently.
+ - Power is restricted.
+    - Cannot tell in general if a set is better than another.
+  - Focus on problem dependent and specifics.
+    - Assumptions and knowledge should be specified.
+1. Hyper-volume.
+2. Error ratio.
+3. Distance from reference set.
+
+### Binary Indicators
+
+ - Theoretically have no limitations.
+ - Analysis and presentation of results more difficult.
+
+1. R1, R2, R3 indicators.
+2. $\varepsilon$-Indicator.
+3. Binary Hyper-volume.
+
+## Hypervolume
+### Considerations
+
+ - Is complete - If, and only if $HV(A) > HV(B) \implies A$ is not worse than $B$.
+ - Is weakly compatible - $HV(A) > HV(B) \implies\not B$ dominates $A$.
+ - Assumptions - All points of a Pareto Set under consideration dominate the reference point.
+     - Ishibuchi @ishibuchi2018specify proposed a method to specify the reference point from a viewpoint of fair performance comparison.
+     
+### Considerations
+ - A large population size is **always** more beneficial than a small one.
+ - Measures both the convergence toward the Pareto Front and the diversity of non-dominated solutions.
+ - A monotonic increase of the hyper-volume over time cannot always be ensured.
+    - For MOEA/D that is always true.
+
+## $\varepsilon$-Indicator
+### Considerations
+ - It compares 2 Pareto Sets.
+    - It indicates which set is better and how much better
+ - If A is better than B $\implies I_{\varepsilon}(B,A) > 0$.
+ - If $I_{\varepsilon}(A,B) \leq 0$ and $I_{\varepsilon}(B,A) > 0 \implies A$ is better than $B$.
+  
 # Pilot Experiments
 ## Preliminary Results
 ### Experimental Design
@@ -263,7 +288,7 @@ knitr::include_graphics(myimages)
 5. Based on the common variation: MOEA/D (variations 1 and 2 from MOEADr) and MOEA/D-DE.
 
 
-### Boxplot
+### Boxplot - HV
 \centering
 ```{r fig.width=4, fig.height=15,echo=FALSE}
 img <- readPNG("images/all_pilot_results.png")
@@ -300,21 +325,8 @@ img <- readPNG("images/all_pilot_results.png")
  - Use this strategy to add some adaptive technique.
  - Use more instances based on the best one, instead of only one - dynamic bet-and-run.
  - Hierarchical bet-and-run - here it has only 2 phases.
- - Suggestions?
 
-
-# Evaluation Metrics
-## Indicators
-### Most Frequently Used
-
-1. Hyper-volume.
-2. R1, R2, R3 indicators.
-3. IGD.
-4. Addictive epsilon indicator.
-
-## Hypervolume
-### Considerations
-
+ 
 ## References
 
 \small

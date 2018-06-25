@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{11}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -22,6 +22,13 @@ Carlos A~Coello Coello, Gary~B Lamont, David~A Van~Veldhuizen, et~al.
 Matteo Fischetti and Michele Monaci.
 \newblock Exploiting erraticism in search.
 \newblock \emph{Operations Research}, 62\penalty0 (1):\penalty0 114--122, 2014.
+
+\bibitem[Friedrich et~al.(2017)Friedrich, K{\"o}tzing, and
+  Wagner]{friedrich2017generic}
+Tobias Friedrich, Timo K{\"o}tzing, and Markus Wagner.
+\newblock A generic bet-and-run strategy for speeding up stochastic local
+  search.
+\newblock In \emph{AAAI}, pages 801--807, 2017.
 
 \bibitem[Gomes et~al.(2000)Gomes, Selman, Crato, and Kautz]{gomes2000heavy}
 Carla~P Gomes, Bart Selman, Nuno Crato, and Henry Kautz.
