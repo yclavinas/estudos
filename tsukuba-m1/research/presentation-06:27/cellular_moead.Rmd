@@ -282,7 +282,7 @@ In general, $f_{i}(x) = F * w_{i}$
 ## Preliminary Results
 ### Experimental Design
 1. Simple experiments - Check my understand and get insights.
-2. DTLZ[1~7] MOP benchmark functions - Available from the MOEADr package.
+2. DTLZ1, DTLZ2, DTLZ6 and DTLZ7  MOP benchmark functions - Available from the MOEADr package.
 3. Every variation will be discussed based on the pilot data showed in the next slide by a box-plot figure.
 4. Number of evaluations: 5 * 10 ^ 4.
 5. Based on the common variation: MOEA/D (variations 1 and 2 from MOEADr) and MOEA/D-DE.
@@ -302,7 +302,7 @@ img <- readPNG("images/all_pilot_results.png")
 2. Decreasing the size of competition neighbourhood increases. the non-dominated solutions, but degrades the search ability of the MOEA/D. **As already observed in @ishibuchi2009adaptation **.
 
 ### LHS
-1. In most cases improves the results by a little - All but with naive restart strategy. 
+1. In some cases improves the results by a little.
 2. It is cheap in terms of computational cost - it is only used once at each execution.
 
 - This improve seems not to be significant.
@@ -310,21 +310,22 @@ img <- readPNG("images/all_pilot_results.png")
 ### ONRA
 1. Computational  costly -> more interactions than without it and we need to calculate the resources allocation every interaction.
 2. It was beneficial in a few cases, while in others the overall quality decreased.
+    - Considering the all functions and algorithms together it seems it leads to better results.
 
-### Restart Strategy
-1. It is the variation added to the MOEA/D which lead to better final quality results.
-2. Its performances become worse when combined with other variations.
+### Bet-and-Run Strategy
+1. Overall, this strategy combined with the MOEA/D lead to better final quality results.
+2. Its performances become better when combined with other variations, specially with cGA+LHS.
 
  
 ### Future works
 1. cGA - On the fly parameter adaptation.
-2. LHS - Suggestions?
-3. ONRA
- - Review my implementation and try the other methods proposed in @zhou2016all. Only the one considered to be the "best" was implemented.
-4. Bet-and-Run strategy
- - Use this strategy to add some adaptive technique.
- - Use more instances based on the best one, instead of only one - dynamic bet-and-run.
- - Hierarchical bet-and-run - here it has only 2 phases.
+2. ONRA
+    - Review my implementation and try the other methods proposed in @zhou2016all. Only the one considered to be the "best" was implemented.
+3. Bet-and-Run strategy
+  - Use this strategy to add some adaptive technique.
+  - Use more instances based on the best one, instead of only one.
+  - Dynamic bet-and-run.
+  - Hierarchical bet-and-run - here it has only 2 phases.
 
  
 ## References
