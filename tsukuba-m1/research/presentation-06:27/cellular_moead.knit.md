@@ -20,14 +20,7 @@ bibliography: bib.bib
 link-citations: yes
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-knitr::opts_chunk$set(cache = FALSE)
-library(png)
-library(grid)
-library(ggplot2)
-library(gridExtra)
-```
+
 
 # MOP
 ## Multi-objective Problems
@@ -68,10 +61,7 @@ Set of *optimum solutions* - Pareto set.
 ### What is Pareto Set?
 
 \centering
-```{r fig.width=4.5, fig.height=10,echo=FALSE}
-img <- readPNG("images/pareto_front_diff_scalarizins_f.png")
- grid.raster(img)
-```
+![](cellular_moead_files/figure-beamer/unnamed-chunk-1-1.pdf)<!-- --> 
 
 \tiny From @ishibuchi2009adaptation.
 
@@ -90,10 +80,7 @@ img <- readPNG("images/pareto_front_diff_scalarizins_f.png")
 
 ### Pareto Front
 \centering
-```{r fig.width=3, fig.height=15,echo=FALSE}
-img <- readPNG("images/pareto_dominated.png")
- grid.raster(img)
-```
+![](cellular_moead_files/figure-beamer/unnamed-chunk-2-1.pdf)<!-- --> 
 \tiny From: http://www.cenaero.be/Page.asp?docid=27103&langue=EN
 
 ### Pareto Front
@@ -119,10 +106,7 @@ MOEA/D represents a class of population-based meta-heuristics for solving Multi 
 ### Decomposition - 2 and 3 objective functions
 
 \centering
-```{r fig.width=4.5, fig.height=13,echo=FALSE}
-img <- readPNG("images/decomp2.png")
- grid.raster(img)
-```
+![](cellular_moead_files/figure-beamer/unnamed-chunk-3-1.pdf)<!-- --> 
 
 \tiny From: @chugh2017handling.
 
@@ -139,10 +123,7 @@ img <- readPNG("images/decomp2.png")
 ### Decomposition + Aggregation Function
 
 \centering
-```{r fig.width=2.7, fig.height=9,echo=FALSE}
-img <- readPNG("images/decomp.png")
- grid.raster(img)
-```
+![](cellular_moead_files/figure-beamer/unnamed-chunk-4-1.pdf)<!-- --> 
 \raggedright \tiny 
 \centering
 $f_{3}(x) = F * w_{3}$
@@ -290,10 +271,7 @@ Figure from: @chugh2017handling.
 
 ### Boxplot - HV
 \centering
-```{r fig.width=4, fig.height=15,echo=FALSE}
-img <- readPNG("images/all_pilot_results.png")
- grid.raster(img)
-```
+![](cellular_moead_files/figure-beamer/unnamed-chunk-5-1.pdf)<!-- --> 
 
 
 ## Discussions 
