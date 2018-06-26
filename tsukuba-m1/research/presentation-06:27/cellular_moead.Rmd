@@ -263,7 +263,7 @@ Figure from: @chugh2017handling.
  - Is complete - If, and only if $HV(A) > HV(B) \implies A$ is not worse than $B$.
  - Is weakly compatible - $HV(A) > HV(B) \implies\not B$ dominates $A$.
  - Assumptions - All points of a Pareto Set under consideration dominate the reference point.
-     - Ishibuchi @ishibuchi2018specify proposed a method to specify the reference point from a viewpoint of fair performance comparison.
+     - @ishibuchi2018specify proposed a method to specify the reference point from a viewpoint of fair performance comparison.
      
 ### Considerations
  - A large population size is **always** more beneficial than a small one.

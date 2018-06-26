@@ -1,4 +1,4 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -44,6 +44,13 @@ Hisao Ishibuchi, Yuji Sakane, Noritaka Tsukamoto, and Yusuke Nojima.
   scalarizing function-based multiobjective evolutionary algorithm.
 \newblock In \emph{International Conference on Evolutionary Multi-Criterion
   Optimization}, pages 438--452. Springer, 2009.
+
+\bibitem[Ishibuchi et~al.(2018)Ishibuchi, Imada, Setoguchi, and
+  Nojima]{ishibuchi2018specify}
+Hisao Ishibuchi, Ryo Imada, Yu~Setoguchi, and Yusuke Nojima.
+\newblock How to specify a reference point in hypervolume calculation for fair
+  performance comparison.
+\newblock \emph{Evolutionary computation}, pages 1--29, 2018.
 
 \bibitem[Lissovoi et~al.(2017)Lissovoi, Sudholt, Wagner, and
   Zarges]{lissovoi2017theoretical}
